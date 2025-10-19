@@ -40,5 +40,14 @@ namespace UnitTests
             long actual = _sut.CalculateFee(start, end);
             actual.ShouldBe(60);
         }
+        
+        [Test]
+        public void CalculateFee_Over_60Minutes_Then_pay_90()
+        {
+            DateTime start = new DateTime(2025, 1, 1, 0, 0, 0);
+            DateTime end = new DateTime(2025, 1, 1, 1, 0, 1);
+            long actual = _sut.CalculateFee(start, end);
+            actual.ShouldBe(90);
+        }
     }
 }

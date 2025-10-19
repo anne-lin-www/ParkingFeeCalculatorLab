@@ -22,12 +22,17 @@ namespace ParkingFeeCalculatorLab
                 return 0L;
             }
 
-            if(minsBetween < 30)
+            if (minsBetween < 30)
             {
                 return 30L;
             }
+            
+            if (minsBetween < 60)
+            {
+                return 60L;
+            }
 
-            return 60L;
+            return 90L;
         }
     }
 }
