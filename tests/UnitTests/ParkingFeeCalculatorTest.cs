@@ -36,7 +36,7 @@ namespace UnitTests
         public void CalculateFee_Over_30Minutes_Then_pay_60()
         {
             DateTime start = new DateTime(2025, 1, 1, 0, 0, 0);
-            DateTime end = new DateTime(2025, 1, 1, 0, 30, 1);
+            DateTime end = new DateTime(2025, 1, 1, 0, 30, 0);
             long actual = _sut.CalculateFee(start, end);
             actual.ShouldBe(60);
         }
@@ -45,9 +45,18 @@ namespace UnitTests
         public void CalculateFee_Over_60Minutes_Then_pay_90()
         {
             DateTime start = new DateTime(2025, 1, 1, 0, 0, 0);
-            DateTime end = new DateTime(2025, 1, 1, 1, 0, 1);
+            DateTime end = new DateTime(2025, 1, 1, 1, 0, 0);
             long actual = _sut.CalculateFee(start, end);
             actual.ShouldBe(90);
+        }
+        
+        [Test]
+        public void CalculateFee_Over_150Minutes_Then_pay_150()
+        {
+            DateTime start = new DateTime(2025, 1, 1, 0, 0, 0);
+            DateTime end = new DateTime(2025, 1, 1, 2, 30, 0);
+            long actual = _sut.CalculateFee(start, end);
+            actual.ShouldBe(150);
         }
     }
 }

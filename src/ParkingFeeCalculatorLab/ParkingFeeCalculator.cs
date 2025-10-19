@@ -22,7 +22,9 @@ namespace ParkingFeeCalculatorLab
                 return 0L;
             }
 
-            return GetRegularFee(minsBetween);
+            long regularFee = GetRegularFee(minsBetween);
+
+            return Math.Min(regularFee, 150L);
         }
 
         private static long GetRegularFee(long minsBetween)
