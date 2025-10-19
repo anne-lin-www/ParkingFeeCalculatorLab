@@ -1,5 +1,6 @@
 ﻿using ParkingFeeCalculatorLab;
 using NUnit.Framework;
+using Shouldly;
 
 namespace UnitTests
 {
@@ -19,7 +20,7 @@ namespace UnitTests
             DateTime start = new DateTime(2025, 1, 1, 0, 0, 0);
             DateTime end = new DateTime(2025, 1, 1, 0, 14, 59);
             long actual = _sut.CalculateFee(start, end);
-            Assert.That(actual, Is.EqualTo(0));
+            actual.ShouldBe(0);
         }
 
         [Test]
@@ -28,8 +29,16 @@ namespace UnitTests
             DateTime start = new DateTime(2025, 1, 1, 0, 0, 0);
             DateTime end = new DateTime(2025, 1, 1, 0, 15, 0);
             long actual = _sut.CalculateFee(start, end);
-            Assert.That(actual, Is.EqualTo(30));
+            actual.ShouldBe(30);
         }
 
+        [Test]
+        public void CalculateFee_Over_30Minutes_Then_pay_60()
+        {
+            DateTime start = new DateTime(2025, 1, 1, 0, 0, 0);
+            DateTime end = new DateTime(2025, 1, 1, 0, 30, 1);
+            long actual = _sut.CalculateFee(start, end);
+            actual.ShouldBe(60);
+        }
     }
 }
