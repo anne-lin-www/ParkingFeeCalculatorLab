@@ -15,7 +15,14 @@ namespace ParkingFeeCalculatorLab
         //      當日上限 2400 元（隔日另計）
         public long CalculateFee(DateTime start, DateTime end)
         {
-            return 0;
+            long minsBetween = (long)(end - start).TotalMinutes;
+
+            if (minsBetween < 15)
+            {
+                return 0L;
+            }
+
+            return 30L;
         }
     }
 }

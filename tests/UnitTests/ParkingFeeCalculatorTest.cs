@@ -4,7 +4,7 @@ using NUnit.Framework;
 namespace UnitTests
 {
     public class Tests
-    {  
+    {
         private ParkingFeeCalculator _sut;
 
         [SetUp]
@@ -21,5 +21,15 @@ namespace UnitTests
             long actual = _sut.CalculateFee(start, end);
             Assert.That(actual, Is.EqualTo(0));
         }
+
+        [Test]
+        public void CalculateFee_Over_15Minutes_Not_Free()
+        {
+            DateTime start = new DateTime(2025, 1, 1, 0, 0, 0);
+            DateTime end = new DateTime(2025, 1, 1, 0, 15, 0);
+            long actual = _sut.CalculateFee(start, end);
+            Assert.That(actual, Is.EqualTo(30));
+        }
+
     }
 }
