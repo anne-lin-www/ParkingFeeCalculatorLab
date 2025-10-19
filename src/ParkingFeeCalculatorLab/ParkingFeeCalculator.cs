@@ -22,11 +22,16 @@ namespace ParkingFeeCalculatorLab
                 return 0L;
             }
 
+            long periods = minsBetween / 30;
+            long fee = (periods + 1) * 30;
+
+            return fee;
+
             if (minsBetween < 30)
             {
                 return 30L;
             }
-            
+
             if (minsBetween < 60)
             {
                 return 60L;
