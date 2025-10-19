@@ -22,22 +22,14 @@ namespace ParkingFeeCalculatorLab
                 return 0L;
             }
 
+            return GetRegularFee(minsBetween);
+        }
+
+        private static long GetRegularFee(long minsBetween)
+        {
             long periods = minsBetween / 30;
-            long fee = (periods + 1) * 30;
 
-            return fee;
-
-            if (minsBetween < 30)
-            {
-                return 30L;
-            }
-
-            if (minsBetween < 60)
-            {
-                return 60L;
-            }
-
-            return 90L;
+            return (periods + 1) * 30;
         }
     }
 }
