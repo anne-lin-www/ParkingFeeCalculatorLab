@@ -26,16 +26,27 @@ namespace ParkingFeeCalculatorLab
         {
             var duration = end - start;
 
-            if (duration.TotalMinutes <= FIFTEEN_MINUTES.TotalMinutes)
+            if (IsShort(duration))
             {
                 return 0L;
             }
 
+            long fee = GetRegularFee(duration);
+
+            return Math.Min(fee, 150L);
+        }
+
+        private long GetRegularFee(TimeSpan duration)
+        {
             // 以 30 分鐘為單位，無條件進位
             long periods = (long)Math.Ceiling(duration.TotalMinutes / THIRTY_MINUTES.TotalMinutes);
             long fee = periods * 30;
+            return fee;
+        }
 
-            return Math.Min(fee, 150L);
+        private bool IsShort(TimeSpan duration)
+        {
+            return duration.TotalMinutes <= FIFTEEN_MINUTES.TotalMinutes;
         }
     }
 }
