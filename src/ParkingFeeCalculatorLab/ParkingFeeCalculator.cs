@@ -35,22 +35,6 @@ namespace ParkingFeeCalculatorLab
             long fee = periods * 30;
 
             return Math.Min(fee, 150L);
-    
-            // long minsBetween = (long)(end - start).TotalMinutes;
-
-            // if (minsBetween <= 15)
-            // {
-            //     return 0L;
-            // }
-
-            // long regularFee = GetRegularFee(minsBetween);
-        }
-
-        private static long GetRegularFee(long minsBetween)
-        {
-            long periods = minsBetween / 30;
-
-            return (periods + 1) * 30;
         }
     }
 }
