@@ -19,19 +19,20 @@ namespace ParkingFeeCalculatorLab
         // (90, 120] mins → 120
         // (120, 150] 分鐘 → 150
 
+        private readonly TimeSpan THIRTY_MINUTES = TimeSpan.FromMinutes(30);
+        private readonly TimeSpan FIFTEEN_MINUTES = TimeSpan.FromMinutes(15);
+
         public long CalculateFee(DateTime start, DateTime end)
         {
             var duration = end - start;
 
-            if (duration.TotalMinutes <= 15)
+            if (duration.TotalMinutes <= FIFTEEN_MINUTES.TotalMinutes)
             {
                 return 0L;
             }
 
-            var thirtyMinutes = TimeSpan.FromMinutes(30);
-
             // 以 30 分鐘為單位，無條件進位
-            long periods = (long)Math.Ceiling(duration.TotalMinutes / thirtyMinutes.TotalMinutes);
+            long periods = (long)Math.Ceiling(duration.TotalMinutes / THIRTY_MINUTES.TotalMinutes);
             long fee = periods * 30;
 
             return Math.Min(fee, 150L);
