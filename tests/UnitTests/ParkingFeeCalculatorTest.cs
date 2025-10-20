@@ -20,8 +20,8 @@ namespace UnitTests
         [Test]
         public void CalculateFee_15Minutes_Free()
         {
-            Given_Parking_Starts_At("2025-01-02" + "T00:00:00");
-            Given_Parking_Ends_At("2025-01-02" + "T00:14:59");
+            Given_Parking_Starts_At("2025-01-02T00:00:00");
+            Given_Parking_Ends_At("2025-01-02T00:15:00");
             When_Calculate();
             Then_Should_Pay(0);
         }
@@ -29,8 +29,8 @@ namespace UnitTests
         [Test]
         public void CalculateFee_Over_15Minutes_Not_Free()
         {
-            Given_Parking_Starts_At("2025-01-02" + "T00:00:00");
-            Given_Parking_Ends_At("2025-01-02" + "T00:15:00");
+            Given_Parking_Starts_At("2025-01-02T00:00:00");
+            Given_Parking_Ends_At("2025-01-02T00:15:01");
             When_Calculate();
             Then_Should_Pay(30);
         }
@@ -38,8 +38,8 @@ namespace UnitTests
         [Test]
         public void CalculateFee_Over_30Minutes_Then_pay_60()
         {
-            Given_Parking_Starts_At("2025-01-02" + "T00:00:00");
-            Given_Parking_Ends_At("2025-01-02" + "T00:30:00");
+            Given_Parking_Starts_At("2025-01-02T00:00:00");
+            Given_Parking_Ends_At("2025-01-02T00:30:01");
             When_Calculate();
             Then_Should_Pay(60);
         }
@@ -47,8 +47,8 @@ namespace UnitTests
         [Test]
         public void CalculateFee_Over_60Minutes_Then_pay_90()
         {
-            Given_Parking_Starts_At("2025-01-02" + "T00:00:00");
-            Given_Parking_Ends_At("2025-01-02" + "T01:00:00");
+            Given_Parking_Starts_At("2025-01-02T00:00:00");
+            Given_Parking_Ends_At("2025-01-02T01:00:01");
             When_Calculate();
             Then_Should_Pay(90);
         }
@@ -56,8 +56,8 @@ namespace UnitTests
         [Test]
         public void CalculateFee_Over_150Minutes_Then_pay_150()
         {
-            Given_Parking_Starts_At("2025-01-02" + "T00:00:00");
-            Given_Parking_Ends_At("2025-01-02" + "T02:30:00");
+            Given_Parking_Starts_At("2025-01-02T00:00:00");
+            Given_Parking_Ends_At("2025-01-02T02:30:01");
             When_Calculate();
             Then_Should_Pay(150);
         }
