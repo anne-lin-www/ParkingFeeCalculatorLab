@@ -10,7 +10,7 @@ namespace UnitTests
         private DateTime end;
         private long actual;
         private ParkingFeeCalculator sut;
-        
+
         [SetUp]
         public void Setup()
         {
@@ -20,39 +20,46 @@ namespace UnitTests
         [Test]
         public void CalculateFee_15Minutes_Free()
         {
-            Run_Test("2025-01-01 00:00:00", "2025-01-01 00:14:59", 0);
+            Given_Parking_Starts_At("2025-01-02" + "T00:00:00");
+            Given_Parking_Ends_At("2025-01-02" + "T00:14:59");
+            When_Calculate();
+            Then_Should_Pay(0);
         }
 
         [Test]
         public void CalculateFee_Over_15Minutes_Not_Free()
         {
-            Run_Test("2025-01-01 00:00:00", "2025-01-01 00:15:00", 30);
+            Given_Parking_Starts_At("2025-01-02" + "T00:00:00");
+            Given_Parking_Ends_At("2025-01-02" + "T00:15:00");
+            When_Calculate();
+            Then_Should_Pay(30);
         }
 
         [Test]
         public void CalculateFee_Over_30Minutes_Then_pay_60()
         {
-            Run_Test("2025-01-01 00:00:00", "2025-01-01 00:30:00", 60);
+            Given_Parking_Starts_At("2025-01-02" + "T00:00:00");
+            Given_Parking_Ends_At("2025-01-02" + "T00:30:00");
+            When_Calculate();
+            Then_Should_Pay(60);
         }
-        
+
         [Test]
         public void CalculateFee_Over_60Minutes_Then_pay_90()
         {
-            Run_Test("2025-01-01 00:00:00", "2025-01-01 01:00:00", 90);
+            Given_Parking_Starts_At("2025-01-02" + "T00:00:00");
+            Given_Parking_Ends_At("2025-01-02" + "T01:00:00");
+            When_Calculate();
+            Then_Should_Pay(90);
         }
 
         [Test]
         public void CalculateFee_Over_150Minutes_Then_pay_150()
         {
-            Run_Test("2025-01-01 00:00:00", "2025-01-01 02:30:00", 150);
-        }
-
-        private void Run_Test(string startText, string endText, long expected)
-        {
-            Given_Parking_Starts_At(startText);
-            Given_Parking_Ends_At(endText);
+            Given_Parking_Starts_At("2025-01-02" + "T00:00:00");
+            Given_Parking_Ends_At("2025-01-02" + "T02:30:00");
             When_Calculate();
-            Then_Should_Pay(expected);
+            Then_Should_Pay(150);
         }
 
         private void Given_Parking_Starts_At(string startText)
@@ -69,7 +76,7 @@ namespace UnitTests
         {
             actual = sut.CalculateFee(start, end);
         }
-        
+
         private void Then_Should_Pay(long expected)
         {
             actual.ShouldBe(expected);
