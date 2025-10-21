@@ -24,6 +24,12 @@ namespace ParkingFeeCalculatorLab
 
         public long CalculateFee(DateTime start, DateTime end)
         {
+            // 跨天
+            //      一個 duration 切多段，一天一段
+            // 例假日與國定假日
+            //      今天是哪一天
+            //      一個 duration 切多段，一天一段
+
             var duration = end - start;
 
             if (IsShort(duration))
@@ -31,9 +37,24 @@ namespace ParkingFeeCalculatorLab
                 return 0L;
             }
 
-            long fee = GetRegularFee(duration);
-
-            return Math.Min(fee, 150L);
+            // 判斷是否為同一天進出
+            if (start.Date == end.Date)
+            {
+                long fee = GetRegularFee(duration);
+                return Math.Min(fee, 150L);
+            }
+            else
+            {
+                // 跨日計費邏輯
+                DateTime todayStart = start.Date;
+                long totalFee = 0L;
+                while (todayStart < end)
+                {
+                    totalFee += 150L;
+                    todayStart = todayStart.AddDays(1);
+                }
+                return totalFee;
+            }
         }
 
         private long GetRegularFee(TimeSpan duration)

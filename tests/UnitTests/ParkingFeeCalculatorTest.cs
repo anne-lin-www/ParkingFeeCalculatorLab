@@ -23,7 +23,7 @@ namespace UnitTests
             Given_Parking_Starts_At("2025-01-02T00:00:00");
             Given_Parking_Ends_At("2025-01-02T00:15:00");
             When_Calculate();
-            Then_Should_Pay(0);
+            Then_Should_Pay(0L);
         }
 
         [Test]
@@ -32,7 +32,7 @@ namespace UnitTests
             Given_Parking_Starts_At("2025-01-02T00:00:00");
             Given_Parking_Ends_At("2025-01-02T00:15:01");
             When_Calculate();
-            Then_Should_Pay(30);
+            Then_Should_Pay(30L);
         }
 
         [Test]
@@ -41,7 +41,7 @@ namespace UnitTests
             Given_Parking_Starts_At("2025-01-02T00:00:00");
             Given_Parking_Ends_At("2025-01-02T00:30:01");
             When_Calculate();
-            Then_Should_Pay(60);
+            Then_Should_Pay(60L);
         }
 
         [Test]
@@ -50,7 +50,7 @@ namespace UnitTests
             Given_Parking_Starts_At("2025-01-02T00:00:00");
             Given_Parking_Ends_At("2025-01-02T01:00:01");
             When_Calculate();
-            Then_Should_Pay(90);
+            Then_Should_Pay(90L);
         }
 
         [Test]
@@ -59,7 +59,16 @@ namespace UnitTests
             Given_Parking_Starts_At("2025-01-02T00:00:00");
             Given_Parking_Ends_At("2025-01-02T02:30:01");
             When_Calculate();
-            Then_Should_Pay(150);
+            Then_Should_Pay(150L);
+        }
+
+        [Test]
+        public void CalculateFee_Two_Whole_Days()
+        {
+            Given_Parking_Starts_At("2025-01-02T00:00:00");
+            Given_Parking_Ends_At("2025-01-04T00:00:00");
+            When_Calculate();
+            Then_Should_Pay(150L + 150L);
         }
 
         private void Given_Parking_Starts_At(string startText)
