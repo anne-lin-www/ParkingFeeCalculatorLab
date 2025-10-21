@@ -37,18 +37,10 @@ namespace ParkingFeeCalculatorLab
                 return 0L;
             }
 
-            // 判斷是否為同一天進出
-            // if (start.Date == end.Date)
-            // {
-            //     long fee = GetRegularFee(duration);
-            //     return Math.Min(fee, 150L);
-            // }
-            // else // 跨日計費邏輯
-            // {
-                DateTime todayStart = start.Date;
-                long totalFee = 0L;
-                while (todayStart < end)
-                {
+            DateTime todayStart = start.Date;
+            long totalFee = 0L;
+            while (todayStart < end)
+            {
                 if (start > todayStart
                     && !(end < todayStart.AddDays(1L))) // 首日停車時間未滿上限 
                 {
@@ -83,11 +75,10 @@ namespace ParkingFeeCalculatorLab
                 {
                     totalFee += 150L;
                 }
-                    
-                    todayStart = todayStart.AddDays(1L);
-                }
-                return totalFee;
-            // }
+
+                todayStart = todayStart.AddDays(1L);
+            }
+            return totalFee;
         }
 
         private long GetRegularFee(TimeSpan duration)
