@@ -41,47 +41,16 @@ namespace ParkingFeeCalculatorLab
             long totalFee = 0L;
             while (todayStart < end)
             {
-                if (start > todayStart
-                    && !(end < todayStart.AddDays(1L))) // 首日停車時間未滿上限 
-                {
-                    DateTime todaySessionStart = start;
-                    DateTime todaySessionEnd = todayStart.AddDays(1L);
-                    TimeSpan todayDuration = todaySessionEnd - todaySessionStart;
+                DateTime tomorrwStart = todayStart.AddDays(1L);
 
-                    long todayFee = GetRegularFee(todayDuration);
-                    totalFee += Math.Min(todayFee, 150L);
-                }
-                else if (!(start > todayStart)
-                    && (end < todayStart.AddDays(1L))) // 最後一日停車時間未滿上限
-                {
-                    DateTime todaySessionStart = todayStart;
-                    DateTime todaySessionEnd = end;
-                    TimeSpan todayDuration = todaySessionEnd - todaySessionStart;
+                DateTime todaySessionStart = start > todayStart ? start : todayStart;
+                DateTime todaySessionEnd = end < tomorrwStart ? end : tomorrwStart;
+                TimeSpan todayDuration = todaySessionEnd - todaySessionStart;
 
-                    long todayFee = GetRegularFee(todayDuration);
-                    totalFee += Math.Min(todayFee, 150L);
-                }
-                else if ((start > todayStart)
-                        && (end < todayStart.AddDays(1L))) // 同一日
-                {
-                    DateTime todaySessionStart = start;
-                    DateTime todaySessionEnd = end;
-                    TimeSpan todayDuration = todaySessionEnd - todaySessionStart;
+                long todayFee = GetRegularFee(todayDuration);
+                totalFee += Math.Min(todayFee, 150L);
 
-                    long todayFee = GetRegularFee(todayDuration);
-                    totalFee += Math.Min(todayFee, 150L);
-                }
-                else
-                {
-                    DateTime todaySessionStart = todayStart;
-                    DateTime todaySessionEnd = todayStart.AddDays(1L);
-                    TimeSpan todayDuration = todaySessionEnd - todaySessionStart;
-
-                    long todayFee = GetRegularFee(todayDuration);
-                    totalFee += Math.Min(todayFee, 150L);
-                }
-
-                todayStart = todayStart.AddDays(1L);
+                todayStart = tomorrwStart;
             }
             return totalFee;
         }
