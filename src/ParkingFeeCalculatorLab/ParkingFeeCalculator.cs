@@ -73,7 +73,12 @@ namespace ParkingFeeCalculatorLab
                 }
                 else
                 {
-                    totalFee += 150L;
+                    DateTime todaySessionStart = todayStart;
+                    DateTime todaySessionEnd = todayStart.AddDays(1L);
+                    TimeSpan todayDuration = todaySessionEnd - todaySessionStart;
+
+                    long todayFee = GetRegularFee(todayDuration);
+                    totalFee += Math.Min(todayFee, 150L);
                 }
 
                 todayStart = todayStart.AddDays(1L);
