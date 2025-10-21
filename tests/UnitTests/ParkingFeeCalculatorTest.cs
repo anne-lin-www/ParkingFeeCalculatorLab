@@ -38,8 +38,8 @@ namespace UnitTests
         [Test]
         public void CalculateFee_Over_30Minutes_Then_pay_60()
         {
-            Given_Parking_Starts_At("2025-01-02T00:00:00");
-            Given_Parking_Ends_At("2025-01-02T00:30:01");
+            Given_Parking_Starts_At("2025-01-02T00:01:00");
+            Given_Parking_Ends_At("2025-01-02T00:31:01");
             When_Calculate();
             Then_Should_Pay(60L);
         }
@@ -69,6 +69,24 @@ namespace UnitTests
             Given_Parking_Ends_At("2025-01-04T00:00:00");
             When_Calculate();
             Then_Should_Pay(150L + 150L);
+        }
+
+        [Test]
+        public void CalculateFee_Partial_Day_Then_Whole_day()
+        {
+            Given_Parking_Starts_At("2025-01-02T23:50:00");
+            Given_Parking_Ends_At("2025-01-04T00:00:00");
+            When_Calculate();
+            Then_Should_Pay(30L + 150L);
+        }
+
+        [Test]
+        public void CalculateFee_Whole_Day_Then_Partial_day()
+        {
+            Given_Parking_Starts_At("2025-01-02T00:00:00");
+            Given_Parking_Ends_At("2025-01-03T00:10:00");
+            When_Calculate();
+            Then_Should_Pay(150L + 30L);
         }
 
         private void Given_Parking_Starts_At(string startText)

@@ -38,23 +38,56 @@ namespace ParkingFeeCalculatorLab
             }
 
             // 判斷是否為同一天進出
-            if (start.Date == end.Date)
-            {
-                long fee = GetRegularFee(duration);
-                return Math.Min(fee, 150L);
-            }
-            else
-            {
-                // 跨日計費邏輯
+            // if (start.Date == end.Date)
+            // {
+            //     long fee = GetRegularFee(duration);
+            //     return Math.Min(fee, 150L);
+            // }
+            // else // 跨日計費邏輯
+            // {
                 DateTime todayStart = start.Date;
                 long totalFee = 0L;
                 while (todayStart < end)
                 {
+                if (start > todayStart
+                    && !(end < todayStart.AddDays(1L))) // 首日停車時間未滿上限 
+                {
+                    DateTime todaySessionStart = start;
+                    DateTime todaySessionEnd = todayStart.AddDays(1L);
+                    TimeSpan todayDuration = todaySessionEnd - todaySessionStart;
+
+                    long todayFee = GetRegularFee(todayDuration);
+                    totalFee += Math.Min(todayFee, 150L);
+                }
+                else if (!(start > todayStart)
+                    && (end < todayStart.AddDays(1L))) // 最後一日停車時間未滿上限
+                {
+                    DateTime todaySessionStart = todayStart;
+                    DateTime todaySessionEnd = end;
+                    TimeSpan todayDuration = todaySessionEnd - todaySessionStart;
+
+                    long todayFee = GetRegularFee(todayDuration);
+                    totalFee += Math.Min(todayFee, 150L);
+                }
+                else if ((start > todayStart)
+                        && (end < todayStart.AddDays(1L))) // 同一日
+                {
+                    DateTime todaySessionStart = start;
+                    DateTime todaySessionEnd = end;
+                    TimeSpan todayDuration = todaySessionEnd - todaySessionStart;
+
+                    long todayFee = GetRegularFee(todayDuration);
+                    totalFee += Math.Min(todayFee, 150L);
+                }
+                else
+                {
                     totalFee += 150L;
-                    todayStart = todayStart.AddDays(1);
+                }
+                    
+                    todayStart = todayStart.AddDays(1L);
                 }
                 return totalFee;
-            }
+            // }
         }
 
         private long GetRegularFee(TimeSpan duration)
