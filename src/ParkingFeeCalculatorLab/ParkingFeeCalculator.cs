@@ -22,8 +22,10 @@ namespace ParkingFeeCalculatorLab
         private readonly TimeSpan THIRTY_MINUTES = TimeSpan.FromMinutes(30);
         private readonly TimeSpan FIFTEEN_MINUTES = TimeSpan.FromMinutes(15);
 
-        public long CalculateFee(DateTime start, DateTime end)
+        public long CalculateFee(ParkingSession parkingSession)
         {
+            var start = parkingSession.Start;
+            var end = parkingSession.End;
             // 跨天
             //      一個 duration 切多段，一天一段
             // 例假日與國定假日
