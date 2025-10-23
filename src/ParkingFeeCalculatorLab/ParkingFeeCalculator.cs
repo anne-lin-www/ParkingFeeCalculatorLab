@@ -47,7 +47,7 @@ namespace ParkingFeeCalculatorLab
 
             // n -> 2n => O(n)
             
-            var durations = GetDailyDurations(start, end);
+            var durations = GetDailyDurations(parkingSession);
             
             long totalFee = 0L;
             foreach (var dailyDuration in durations)
@@ -59,16 +59,16 @@ namespace ParkingFeeCalculatorLab
             return totalFee;
         }
 
-        private static List<TimeSpan> GetDailyDurations(DateTime start, DateTime end)
+        private static List<TimeSpan> GetDailyDurations(ParkingSession parkingSession)
         {
             List<TimeSpan> durations = new List<TimeSpan>();
-            DateTime todayStart = start.Date;
-            while (todayStart < end)
+            DateTime todayStart = parkingSession.Start.Date;
+            while (todayStart < parkingSession.End)
             {
                 DateTime tomorrwStart = todayStart.AddDays(1L);
 
-                DateTime todaySessionStart = start > todayStart ? start : todayStart;
-                DateTime todaySessionEnd = end < tomorrwStart ? end : tomorrwStart;
+                DateTime todaySessionStart = parkingSession.Start > todayStart ? parkingSession.Start : todayStart;
+                DateTime todaySessionEnd = parkingSession.End < tomorrwStart ? parkingSession.End : tomorrwStart;
                 TimeSpan todayDuration = todaySessionEnd - todaySessionStart;
                 durations.Add(todayDuration);
                 
