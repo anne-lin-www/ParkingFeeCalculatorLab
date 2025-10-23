@@ -36,9 +36,19 @@ namespace ParkingFeeCalculatorLab
             {
                 return 0L;
             }
+            
+            // Data Clumps + Primitive Obsession
+            // Lack of domain knowledge
+            // each iteration in the loop:
+            //     calculate daily duration             => parking behavior
+            //     calculate fee with daily duration    => charging behavior
 
-            DateTime todayStart = start.Date;
+            // n -> 2n => O(n)
+
             long totalFee = 0L;
+            
+            DateTime todayStart = start.Date;
+            List<TimeSpan> durations = new List<TimeSpan>();
             while (todayStart < end)
             {
                 DateTime tomorrwStart = todayStart.AddDays(1L);
@@ -46,12 +56,21 @@ namespace ParkingFeeCalculatorLab
                 DateTime todaySessionStart = start > todayStart ? start : todayStart;
                 DateTime todaySessionEnd = end < tomorrwStart ? end : tomorrwStart;
                 TimeSpan todayDuration = todaySessionEnd - todaySessionStart;
-
-                long todayFee = GetRegularFee(todayDuration);
-                totalFee += Math.Min(todayFee, 150L);
+                durations.Add(todayDuration);
+                
+                // long todayFee = GetRegularFee(todayDuration);
+                // totalFee += Math.Min(todayFee, 150L);
 
                 todayStart = tomorrwStart;
             }
+
+            foreach (var dailyDuration in durations)
+            {
+                long todayFee = GetRegularFee(dailyDuration);
+                totalFee += Math.Min(todayFee, 150L);
+            }
+            
+            
             return totalFee;
         }
 
