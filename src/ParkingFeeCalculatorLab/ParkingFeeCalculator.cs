@@ -58,9 +58,6 @@ namespace ParkingFeeCalculatorLab
                 TimeSpan todayDuration = todaySessionEnd - todaySessionStart;
                 durations.Add(todayDuration);
                 
-                // long todayFee = GetRegularFee(todayDuration);
-                // totalFee += Math.Min(todayFee, 150L);
-
                 todayStart = tomorrwStart;
             }
 
@@ -69,7 +66,6 @@ namespace ParkingFeeCalculatorLab
                 long todayFee = GetRegularFee(dailyDuration);
                 totalFee += Math.Min(todayFee, 150L);
             }
-            
             
             return totalFee;
         }
