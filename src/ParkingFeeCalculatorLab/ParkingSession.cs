@@ -11,10 +11,12 @@ public class ParkingSession
         End = end;
     }
 
-    public List<TimeSpan> GetDailyDurations()
+    public List<DailySession> GetDailySessions()
     {
         List<TimeSpan> durations = new List<TimeSpan>();
-        DateTime todayStart = Start.Date;
+        List<DailySession> dailySessions = new List<DailySession>();
+        DateTime today = Start;
+        DateTime todayStart = today.Date;
         while (todayStart < End)
         {
             DateTime tomorrwStart = todayStart.AddDays(1L);
@@ -23,11 +25,12 @@ public class ParkingSession
             DateTime todaySessionEnd = End < tomorrwStart ? End : tomorrwStart;
             TimeSpan todayDuration = todaySessionEnd - todaySessionStart;
             durations.Add(todayDuration);
+            dailySessions.Add(new DailySession(today, todayDuration));
                 
             todayStart = tomorrwStart;
         }
 
-        return durations;
+        return dailySessions;
     }
 
     public TimeSpan GetTotalDuration()

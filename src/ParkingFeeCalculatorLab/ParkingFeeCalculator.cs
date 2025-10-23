@@ -43,25 +43,26 @@ namespace ParkingFeeCalculatorLab
             //     calculate daily duration             => parking behavior
             //     calculate fee with daily duration    => charging behavior
 
-            // n -> 2n => O(n)
+            // 透過加上「假日計費」的邏輯，來把「算帳的領域物件」「逼」出來。
             
-            var durations = parkingSession.GetDailyDurations();
+            var dailySessions = parkingSession.GetDailySessions();
             
             long totalFee = 0L;
-            foreach (var dailyDuration in durations)
+            foreach (var dailySession in dailySessions)
             {
-                long todayFee = GetRegularFee(dailyDuration);
+                long todayFee = GetRegularFee(dailySession.GetTodayDuration(), dailySession.GetToday());
                 totalFee += Math.Min(todayFee, 150L);
             }
             
             return totalFee;
         }
 
-        private long GetRegularFee(TimeSpan duration)
+        private long GetRegularFee(TimeSpan duration, DateTime today)
         {
             // 以 30 分鐘為單位，無條件進位
             long periods = (long)Math.Ceiling(duration.TotalMinutes / THIRTY_MINUTES.TotalMinutes);
-            long fee = periods * 30;
+            int unitPrice = DayOfWeek.Saturday.Equals(today.DayOfWeek) ? 50 : 30;
+            long fee = periods * unitPrice;
             return fee;
         }
 
