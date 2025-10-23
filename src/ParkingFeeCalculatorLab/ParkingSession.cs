@@ -2,8 +2,14 @@
 
 public class ParkingSession
 {
-    public DateTime Start { get; init; }
-    public DateTime End { get; init; }
+    private DateTime Start { get; }
+    private DateTime End { get; }
+
+    public ParkingSession(DateTime start, DateTime end)
+    {
+        Start = start;
+        End = end;
+    }
 
     public List<TimeSpan> GetDailyDurations()
     {
