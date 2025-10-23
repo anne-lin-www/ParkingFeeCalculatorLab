@@ -44,11 +44,23 @@ namespace ParkingFeeCalculatorLab
             //     calculate fee with daily duration    => charging behavior
 
             // n -> 2n => O(n)
-
-            long totalFee = 0L;
             
-            DateTime todayStart = start.Date;
+            var durations = GetDailyDurations(start, end);
+            
+            long totalFee = 0L;
+            foreach (var dailyDuration in durations)
+            {
+                long todayFee = GetRegularFee(dailyDuration);
+                totalFee += Math.Min(todayFee, 150L);
+            }
+            
+            return totalFee;
+        }
+
+        private static List<TimeSpan> GetDailyDurations(DateTime start, DateTime end)
+        {
             List<TimeSpan> durations = new List<TimeSpan>();
+            DateTime todayStart = start.Date;
             while (todayStart < end)
             {
                 DateTime tomorrwStart = todayStart.AddDays(1L);
@@ -61,13 +73,7 @@ namespace ParkingFeeCalculatorLab
                 todayStart = tomorrwStart;
             }
 
-            foreach (var dailyDuration in durations)
-            {
-                long todayFee = GetRegularFee(dailyDuration);
-                totalFee += Math.Min(todayFee, 150L);
-            }
-            
-            return totalFee;
+            return durations;
         }
 
         private long GetRegularFee(TimeSpan duration)
