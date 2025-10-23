@@ -30,7 +30,7 @@ namespace ParkingFeeCalculatorLab
             //      今天是哪一天
             //      一個 duration 切多段，一天一段
 
-            var duration = parkingSession.End - parkingSession.Start;
+            var duration = parkingSession.GetTotalDuration();
 
             if (IsShort(duration))
             {

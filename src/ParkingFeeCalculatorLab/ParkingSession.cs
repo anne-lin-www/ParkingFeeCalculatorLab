@@ -23,4 +23,9 @@ public class ParkingSession
 
         return durations;
     }
+
+    public TimeSpan GetTotalDuration()
+    {
+        return End - Start;
+    }
 }
