@@ -24,15 +24,13 @@ namespace ParkingFeeCalculatorLab
 
         public long CalculateFee(ParkingSession parkingSession)
         {
-            var start = parkingSession.Start;
-            var end = parkingSession.End;
             // 跨天
             //      一個 duration 切多段，一天一段
             // 例假日與國定假日
             //      今天是哪一天
             //      一個 duration 切多段，一天一段
 
-            var duration = end - start;
+            var duration = parkingSession.End - parkingSession.Start;
 
             if (IsShort(duration))
             {
@@ -47,7 +45,7 @@ namespace ParkingFeeCalculatorLab
 
             // n -> 2n => O(n)
             
-            var durations = GetDailyDurations(parkingSession);
+            var durations = parkingSession.GetDailyDurations();
             
             long totalFee = 0L;
             foreach (var dailyDuration in durations)
@@ -57,25 +55,6 @@ namespace ParkingFeeCalculatorLab
             }
             
             return totalFee;
-        }
-
-        private static List<TimeSpan> GetDailyDurations(ParkingSession parkingSession)
-        {
-            List<TimeSpan> durations = new List<TimeSpan>();
-            DateTime todayStart = parkingSession.Start.Date;
-            while (todayStart < parkingSession.End)
-            {
-                DateTime tomorrwStart = todayStart.AddDays(1L);
-
-                DateTime todaySessionStart = parkingSession.Start > todayStart ? parkingSession.Start : todayStart;
-                DateTime todaySessionEnd = parkingSession.End < tomorrwStart ? parkingSession.End : tomorrwStart;
-                TimeSpan todayDuration = todaySessionEnd - todaySessionStart;
-                durations.Add(todayDuration);
-                
-                todayStart = tomorrwStart;
-            }
-
-            return durations;
         }
 
         private long GetRegularFee(TimeSpan duration)
