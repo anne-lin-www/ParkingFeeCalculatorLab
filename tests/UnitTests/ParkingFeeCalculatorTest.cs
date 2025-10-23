@@ -101,7 +101,11 @@ namespace UnitTests
 
         private void When_Calculate()
         {
-            actual = sut.CalculateFee(new ParkingSession(start, end));
+            actual = sut.CalculateFee(new ParkingSession
+            {
+                Start = start,
+                End = end
+            });
         }
 
         private void Then_Should_Pay(long expected)

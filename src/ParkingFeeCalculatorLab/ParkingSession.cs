@@ -1,3 +1,7 @@
 ﻿namespace ParkingFeeCalculatorLab;
 
-public record ParkingSession(DateTime Start, DateTime End);
+public class ParkingSession
+{
+    public DateTime Start { get; init; }
+    public DateTime End { get; init; }
+}
