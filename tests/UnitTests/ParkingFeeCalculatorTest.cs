@@ -97,6 +97,15 @@ namespace UnitTests
             When_Calculate();
             Then_Should_Pay(50L);
         }
+        
+        [Test]
+        public void CalculateFee_Sunday_pay_50_per_half_hour()
+        {
+            Given_Parking_Starts_At("2025-01-05T00:00:00");
+            Given_Parking_Ends_At("2025-01-05T00:15:01");
+            When_Calculate();
+            Then_Should_Pay(50L);
+        }
 
         private void Given_Parking_Starts_At(string startText)
         {

@@ -61,7 +61,10 @@ namespace ParkingFeeCalculatorLab
         {
             // 以 30 分鐘為單位，無條件進位
             long periods = (long)Math.Ceiling(duration.TotalMinutes / THIRTY_MINUTES.TotalMinutes);
-            int unitPrice = DayOfWeek.Saturday.Equals(today.DayOfWeek) ? 50 : 30;
+            var weekend = new List<DayOfWeek> { DayOfWeek.Saturday, DayOfWeek.Sunday };
+            int unitPrice = weekend.Contains(today.DayOfWeek)
+                ? 50
+                : 30;
             long fee = periods * unitPrice;
             return fee;
         }
