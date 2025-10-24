@@ -2,8 +2,9 @@ namespace ParkingFeeCalculatorLab;
 
 public class ParkingFeeCalculator
 {
-    private readonly HolidayBook holidayBook;
+    private readonly PriceBook _priceBook;
     private readonly TimeSpan FIFTEEN_MINUTES = TimeSpan.FromMinutes(15);
+    
     // Topic: 如何製作一個「能上新聞的」停車費計算機
     // 停車場
     // 15 分鐘內免費
@@ -23,7 +24,7 @@ public class ParkingFeeCalculator
 
     public ParkingFeeCalculator()
     {
-        holidayBook = new HolidayBook();
+        _priceBook = new PriceBook();
     }
 
     public long CalculateFee(ParkingSession parkingSession)
@@ -34,25 +35,10 @@ public class ParkingFeeCalculator
         {
             return 0L;
         }
-            
-        // Data Clumps + Primitive Obsession
-        // Lack of domain knowledge
-        // each iteration in the loop:
-        //     calculate daily duration             => parking behavior
-        //     calculate fee with daily duration    => charging behavior
-
-        // 透過加上「假日計費」的邏輯，來把「算帳的領域物件」「逼」出來。
-            
+        
         var dailySessions = parkingSession.GetDailySessions();
-            
-        long totalFee = 0L;
-        foreach (var dailySession in dailySessions)
-        {
-            var daily = holidayBook.GetDailyFee(dailySession);
-            totalFee += daily;
-        }
-            
-        return totalFee;
+        
+        return dailySessions.Sum(dailySession => _priceBook.GetDailyFee(dailySession));
     }
 
     private bool IsShort(TimeSpan duration)

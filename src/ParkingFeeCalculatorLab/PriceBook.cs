@@ -1,12 +1,12 @@
 ﻿namespace ParkingFeeCalculatorLab;
 
-public class HolidayBook
+public class PriceBook
 {
     private readonly TimeSpan THIRTY_MINUTES = TimeSpan.FromMinutes(30);
     private readonly List<DayOfWeek> _weekend = [DayOfWeek.Saturday, DayOfWeek.Sunday];
     private readonly HashSet<DateTime> _nationalHolidays;
 
-    public HolidayBook()
+    public PriceBook()
     {
         _nationalHolidays = new HashSet<DateTime>
         {
@@ -25,7 +25,7 @@ public class HolidayBook
         long todayFee = GetRegularFee(dailySession);
         long dailyLimit = IsHoliday(dailySession.GetToday())
             ? 2400L
-            : 150L; // TODO: 根據假日或國定假日，調整上限
+            : 150L;
         return Math.Min(todayFee, dailyLimit);
     }
 
