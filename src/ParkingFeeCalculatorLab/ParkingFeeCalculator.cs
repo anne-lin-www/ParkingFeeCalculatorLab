@@ -2,7 +2,6 @@ namespace ParkingFeeCalculatorLab;
 
 public class ParkingFeeCalculator
 {
-    private readonly PriceBook _priceBook;
     private readonly TimeSpan FIFTEEN_MINUTES = TimeSpan.FromMinutes(15);
     private PriceBookRepository _priceBookRepository;
 
@@ -31,12 +30,11 @@ public class ParkingFeeCalculator
     {
         // _priceBook = new PriceBook();
         _priceBookRepository = bookRepository;
-        _priceBook = _priceBookRepository.GetPriceBook();
     }
 
     public long CalculateFee(ParkingSession parkingSession)
     {
-
+        PriceBook priceBook = _priceBookRepository.GetPriceBook();
         var duration = parkingSession.GetTotalDuration();
 
         if (IsShort(duration))
@@ -46,7 +44,7 @@ public class ParkingFeeCalculator
         
         var dailySessions = parkingSession.GetDailySessions();
         
-        return dailySessions.Sum(dailySession => _priceBook.GetDailyFee(dailySession));
+        return dailySessions.Sum(dailySession => priceBook.GetDailyFee(dailySession));
     }
 
     private bool IsShort(TimeSpan duration)
