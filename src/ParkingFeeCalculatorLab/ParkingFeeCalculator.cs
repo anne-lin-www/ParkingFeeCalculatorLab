@@ -50,7 +50,7 @@ namespace ParkingFeeCalculatorLab
             long totalFee = 0L;
             foreach (var dailySession in dailySessions)
             {
-                long todayFee = GetRegularFee(dailySession.GetTodayDuration(), dailySession.GetToday());
+                long todayFee = GetRegularFee(dailySession);
                 long dailyLimit = IsHoliday(dailySession.GetToday())
                     ? 2400L
                     : 150L; // TODO: 根據假日或國定假日，調整上限
@@ -66,11 +66,11 @@ namespace ParkingFeeCalculatorLab
             return weekend.Contains(today.DayOfWeek);
         }
 
-        private long GetRegularFee(TimeSpan duration, DateTime today)
+        private long GetRegularFee(DailySession dailySession)
         {
             // 以 30 分鐘為單位，無條件進位
-            long periods = (long)Math.Ceiling(duration.TotalMinutes / THIRTY_MINUTES.TotalMinutes);
-            return periods * (IsHoliday(today)
+            long periods = (long)Math.Ceiling(dailySession.GetTodayDuration().TotalMinutes / THIRTY_MINUTES.TotalMinutes);
+            return periods * (IsHoliday(dailySession.GetToday())
                 ? 50
                 : 30);
         }
