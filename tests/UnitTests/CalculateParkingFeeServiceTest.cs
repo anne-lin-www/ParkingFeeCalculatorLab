@@ -4,17 +4,17 @@ using Shouldly;
 
 namespace UnitTests
 {
-    public class Tests
+    public class CalculateParkingFeeServiceTest
     {
         private DateTime start;
         private DateTime end;
         private long actual;
-        private ParkingFeeCalculator sut;
+        private CalculateParkingFeeService sut;
 
         [SetUp]
         public void Setup()
         {
-            sut = new ParkingFeeCalculator(new PriceBookRepository(new PriceBook()));
+            sut = new CalculateParkingFeeService(new PriceBookRepository(new PriceBook()));
         }
 
         [Test]

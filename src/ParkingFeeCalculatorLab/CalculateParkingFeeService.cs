@@ -1,6 +1,6 @@
 namespace ParkingFeeCalculatorLab;
 
-public class ParkingFeeCalculator
+public class CalculateParkingFeeService
 {
     private readonly TimeSpan FIFTEEN_MINUTES = TimeSpan.FromMinutes(15);
     private PriceBookRepository _priceBookRepository;
@@ -26,9 +26,8 @@ public class ParkingFeeCalculator
     // ex: new PriceBook();
     // solution: Repository Pattern
     
-    public ParkingFeeCalculator(PriceBookRepository bookRepository)
+    public CalculateParkingFeeService(PriceBookRepository bookRepository)
     {
-        // _priceBook = new PriceBook();
         _priceBookRepository = bookRepository;
     }
 
