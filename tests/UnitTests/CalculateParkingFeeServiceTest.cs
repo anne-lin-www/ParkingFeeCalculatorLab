@@ -6,8 +6,6 @@ namespace UnitTests
 {
     public class CalculateParkingFeeServiceTest
     {
-        private DateTime start;
-        private DateTime end;
         private long actual;
         private CalculateParkingFeeService sut;
         private IPriceBookRepository _priceBookRepository;
@@ -131,15 +129,13 @@ namespace UnitTests
 
         private void Given_Parking_Starts_At(string startText)
         {
-            start = DateTime.Parse(startText);
-            _parkingSessionRepository.Save(new ParkingSession(start, null));
+            _parkingSessionRepository.Save(new ParkingSession(DateTime.Parse(startText), null));
         }
 
         private void Given_Parking_Ends_At(string endText)
         {
-            end = DateTime.Parse(endText);
             ParkingSession parkingSession = _parkingSessionRepository.Find();
-            parkingSession.SetEnd(end);
+            parkingSession.SetEnd(DateTime.Parse(endText));
             _parkingSessionRepository.Save(parkingSession);
         }
 
