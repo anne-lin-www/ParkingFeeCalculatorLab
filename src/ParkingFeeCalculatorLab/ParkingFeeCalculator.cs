@@ -22,13 +22,20 @@ public class ParkingFeeCalculator
     // (90, 120] mins → 120
     // (120, 150] 分鐘 → 150
 
+    // 物件生成與計算邏輯的耦合
+    // ex: new PriceBook();
+    // solution: Repository Pattern
+    
     public ParkingFeeCalculator()
     {
-        _priceBook = new PriceBook();
+        // _priceBook = new PriceBook();
+        PriceBookRepository priceBookRepository = new PriceBookRepository(new PriceBook());
+        _priceBook = priceBookRepository.GetPriceBook();
     }
 
     public long CalculateFee(ParkingSession parkingSession)
     {
+
         var duration = parkingSession.GetTotalDuration();
 
         if (IsShort(duration))
