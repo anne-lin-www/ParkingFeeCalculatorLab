@@ -1,6 +1,6 @@
 ﻿namespace ParkingFeeCalculatorLab;
 
-public class PriceBookRepository
+public class PriceBookRepository : IPriceBookRepository
 {
     private PriceBook _priceBook;
 

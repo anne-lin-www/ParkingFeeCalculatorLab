@@ -10,11 +10,13 @@ namespace UnitTests
         private DateTime end;
         private long actual;
         private CalculateParkingFeeService sut;
-
+        private IPriceBookRepository priceBookRepository;
+        
         [SetUp]
         public void Setup()
         {
-            sut = new CalculateParkingFeeService(new PriceBookRepository(new PriceBook()));
+            priceBookRepository = new PriceBookRepository(new PriceBook());
+            sut = new CalculateParkingFeeService(priceBookRepository);
         }
 
         [Test]
@@ -88,7 +90,7 @@ namespace UnitTests
             When_Calculate();
             Then_Should_Pay(150L + 30L);
         }
-        
+
         [Test]
         public void CalculateFee_Saturday_Pay_50_Per_Half_Hour()
         {
@@ -97,7 +99,7 @@ namespace UnitTests
             When_Calculate();
             Then_Should_Pay(50L);
         }
-        
+
         [Test]
         public void CalculateFee_Saturday_Daily_Limit_Is_2400()
         {
@@ -106,7 +108,7 @@ namespace UnitTests
             When_Calculate();
             Then_Should_Pay(2400L);
         }
-        
+
         [Test]
         public void CalculateFee_Sunday_Pay_50_Per_Half_Hour()
         {
@@ -115,7 +117,7 @@ namespace UnitTests
             When_Calculate();
             Then_Should_Pay(50L);
         }
-        
+
         [Test]
         public void CalculateFee_National_Holiday_Pay_50_Per_Half_Hour()
         {

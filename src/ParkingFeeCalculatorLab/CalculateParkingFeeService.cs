@@ -3,7 +3,7 @@ namespace ParkingFeeCalculatorLab;
 public class CalculateParkingFeeService
 {
     private readonly TimeSpan FIFTEEN_MINUTES = TimeSpan.FromMinutes(15);
-    private PriceBookRepository _priceBookRepository;
+    private readonly IPriceBookRepository _priceBookRepository;
 
     // Topic: 如何製作一個「能上新聞的」停車費計算機
     // 停車場
@@ -26,7 +26,7 @@ public class CalculateParkingFeeService
     // ex: new PriceBook();
     // solution: Repository Pattern
     
-    public CalculateParkingFeeService(PriceBookRepository bookRepository)
+    public CalculateParkingFeeService(IPriceBookRepository bookRepository)
     {
         _priceBookRepository = bookRepository;
     }
