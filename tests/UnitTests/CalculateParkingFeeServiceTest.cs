@@ -137,11 +137,12 @@ namespace UnitTests
         private void Given_Parking_Ends_At(string endText)
         {
             end = DateTime.Parse(endText);
+            _parkingSessionRepository.Save(new ParkingSession(start, end));
         }
 
         private void When_Calculate()
         {
-            actual = sut.CalculateFee(new ParkingSession(start, end));
+            actual = sut.CalculateFee();
         }
 
         private void Then_Should_Pay(long expected)

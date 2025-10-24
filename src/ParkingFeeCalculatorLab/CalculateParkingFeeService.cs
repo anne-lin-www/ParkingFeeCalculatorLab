@@ -34,11 +34,9 @@ public class CalculateParkingFeeService
         _parkingSessionRepository = parkingSessionRepository;
     }
 
-    public long CalculateFee(ParkingSession parkingSession1)
+    public long CalculateFee()
     {
-        _parkingSessionRepository.Save(parkingSession1);
         ParkingSession parkingSession = _parkingSessionRepository.Find();
-        
         PriceBook priceBook = _priceBookRepository.GetPriceBook();
         var duration = parkingSession.GetTotalDuration();
 
