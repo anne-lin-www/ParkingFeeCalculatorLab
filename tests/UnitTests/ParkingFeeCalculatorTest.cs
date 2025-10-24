@@ -14,7 +14,7 @@ namespace UnitTests
         [SetUp]
         public void Setup()
         {
-            sut = new ParkingFeeCalculator();
+            sut = new ParkingFeeCalculator(new PriceBookRepository(new PriceBook()));
         }
 
         [Test]

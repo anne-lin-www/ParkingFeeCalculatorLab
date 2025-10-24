@@ -4,7 +4,8 @@ public class ParkingFeeCalculator
 {
     private readonly PriceBook _priceBook;
     private readonly TimeSpan FIFTEEN_MINUTES = TimeSpan.FromMinutes(15);
-    
+    private PriceBookRepository _priceBookRepository;
+
     // Topic: 如何製作一個「能上新聞的」停車費計算機
     // 停車場
     // 15 分鐘內免費
@@ -26,11 +27,11 @@ public class ParkingFeeCalculator
     // ex: new PriceBook();
     // solution: Repository Pattern
     
-    public ParkingFeeCalculator()
+    public ParkingFeeCalculator(PriceBookRepository bookRepository)
     {
         // _priceBook = new PriceBook();
-        PriceBookRepository priceBookRepository = new PriceBookRepository(new PriceBook());
-        _priceBook = priceBookRepository.GetPriceBook();
+        _priceBookRepository = bookRepository;
+        _priceBook = _priceBookRepository.GetPriceBook();
     }
 
     public long CalculateFee(ParkingSession parkingSession)
