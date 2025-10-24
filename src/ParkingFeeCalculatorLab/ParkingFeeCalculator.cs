@@ -2,6 +2,9 @@ namespace ParkingFeeCalculatorLab
 {
     public class ParkingFeeCalculator
     {
+        private readonly HolidayBook holidayBook = new HolidayBook();
+        private readonly TimeSpan THIRTY_MINUTES = TimeSpan.FromMinutes(30);
+        private readonly TimeSpan FIFTEEN_MINUTES = TimeSpan.FromMinutes(15);
         // Topic: 如何製作一個「能上新聞的」停車費計算機
         // 停車場
         // 15 分鐘內免費
@@ -18,9 +21,6 @@ namespace ParkingFeeCalculatorLab
         // (60, 90] mins → 90
         // (90, 120] mins → 120
         // (120, 150] 分鐘 → 150
-
-        private readonly TimeSpan THIRTY_MINUTES = TimeSpan.FromMinutes(30);
-        private readonly TimeSpan FIFTEEN_MINUTES = TimeSpan.FromMinutes(15);
 
         public long CalculateFee(ParkingSession parkingSession)
         {
@@ -51,7 +51,7 @@ namespace ParkingFeeCalculatorLab
             foreach (var dailySession in dailySessions)
             {
                 long todayFee = GetRegularFee(dailySession);
-                long dailyLimit = IsHoliday(dailySession.GetToday())
+                long dailyLimit = holidayBook.IsHoliday(dailySession.GetToday())
                     ? 2400L
                     : 150L; // TODO: 根據假日或國定假日，調整上限
                 totalFee += Math.Min(todayFee, dailyLimit);
@@ -60,17 +60,11 @@ namespace ParkingFeeCalculatorLab
             return totalFee;
         }
 
-        private static bool IsHoliday(DateTime today)
-        {
-            var weekend = new List<DayOfWeek> { DayOfWeek.Saturday, DayOfWeek.Sunday };
-            return weekend.Contains(today.DayOfWeek);
-        }
-
         private long GetRegularFee(DailySession dailySession)
         {
             // 以 30 分鐘為單位，無條件進位
             long periods = (long)Math.Ceiling(dailySession.GetTodayDuration().TotalMinutes / THIRTY_MINUTES.TotalMinutes);
-            return periods * (IsHoliday(dailySession.GetToday())
+            return periods * (holidayBook.IsHoliday(dailySession.GetToday())
                 ? 50
                 : 30);
         }
@@ -78,6 +72,11 @@ namespace ParkingFeeCalculatorLab
         private bool IsShort(TimeSpan duration)
         {
             return duration.TotalMinutes <= FIFTEEN_MINUTES.TotalMinutes;
+        }
+        
+        private bool IsHoliday(DateTime today)
+        {
+            return holidayBook.IsHoliday(today);
         }
     }
 }
