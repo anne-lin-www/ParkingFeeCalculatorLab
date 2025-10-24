@@ -10,13 +10,15 @@ namespace UnitTests
         private DateTime end;
         private long actual;
         private CalculateParkingFeeService sut;
-        private IPriceBookRepository priceBookRepository;
+        private IPriceBookRepository _priceBookRepository;
+        private IParkingSessionRepository _parkingSessionRepository;
         
         [SetUp]
         public void Setup()
         {
-            priceBookRepository = new PriceBookRepository(new PriceBook());
-            sut = new CalculateParkingFeeService(priceBookRepository);
+            _priceBookRepository = new PriceBookRepository(new PriceBook());
+            _parkingSessionRepository = new ParkingSessionRepository();
+            sut = new CalculateParkingFeeService(_priceBookRepository, _parkingSessionRepository);
         }
 
         [Test]

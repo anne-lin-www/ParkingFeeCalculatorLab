@@ -4,6 +4,7 @@ public class CalculateParkingFeeService
 {
     private readonly TimeSpan FIFTEEN_MINUTES = TimeSpan.FromMinutes(15);
     private readonly IPriceBookRepository _priceBookRepository;
+    private readonly IParkingSessionRepository _parkingSessionRepository;
 
     // Topic: 如何製作一個「能上新聞的」停車費計算機
     // 停車場
@@ -22,17 +23,22 @@ public class CalculateParkingFeeService
     // (90, 120] mins → 120
     // (120, 150] 分鐘 → 150
 
-    // 物件生成與計算邏輯的耦合
-    // ex: new PriceBook();
-    // solution: Repository Pattern
+    // Repository 的職責、物件的生命週期
+    //   ex: calculate(ParkingSession parkingSession)
+    //   solution: Repository + Factory
+    // 以將行為委託給 Entity，以取代「資料操作」
     
-    public CalculateParkingFeeService(IPriceBookRepository bookRepository)
+    public CalculateParkingFeeService(IPriceBookRepository bookRepository, IParkingSessionRepository parkingSessionRepository)
     {
         _priceBookRepository = bookRepository;
+        _parkingSessionRepository = parkingSessionRepository;
     }
 
-    public long CalculateFee(ParkingSession parkingSession)
+    public long CalculateFee(ParkingSession parkingSession1)
     {
+        _parkingSessionRepository.Save(parkingSession1);
+        ParkingSession parkingSession = _parkingSessionRepository.Find();
+        
         PriceBook priceBook = _priceBookRepository.GetPriceBook();
         var duration = parkingSession.GetTotalDuration();
 
