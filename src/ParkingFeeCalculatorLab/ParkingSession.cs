@@ -3,9 +3,9 @@
 public class ParkingSession
 {
     private DateTime Start { get; }
-    private DateTime End { get; }
+    private DateTime? End { get; set; }
 
-    public ParkingSession(DateTime start, DateTime end)
+    public ParkingSession(DateTime start, DateTime? end)
     {
         Start = start;
         End = end;
@@ -22,7 +22,7 @@ public class ParkingSession
             DateTime tomorrwStart = todayStart.AddDays(1L);
 
             DateTime todaySessionStart = Start > todayStart ? Start : todayStart;
-            DateTime todaySessionEnd = End < tomorrwStart ? End : tomorrwStart;
+            DateTime todaySessionEnd = End.GetValueOrDefault() < tomorrwStart ? End.GetValueOrDefault() : tomorrwStart;
             TimeSpan todayDuration = todaySessionEnd - todaySessionStart;
             durations.Add(todayDuration);
             dailySessions.Add(new DailySession(today, todayDuration));
@@ -35,6 +35,11 @@ public class ParkingSession
 
     public TimeSpan GetTotalDuration()
     {
-        return End - Start;
+        return End.GetValueOrDefault() - Start;
+    }
+
+    public void SetEnd(DateTime end)
+    {
+        End = end;
     }
 }
