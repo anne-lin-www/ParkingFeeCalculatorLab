@@ -115,6 +115,15 @@ namespace UnitTests
             When_Calculate();
             Then_Should_Pay(50L);
         }
+        
+        [Test]
+        public void CalculateFee_National_Holiday_Pay_50_Per_Half_Hour()
+        {
+            Given_Parking_Starts_At("2025-01-01T00:00:00");
+            Given_Parking_Ends_At("2025-01-01T00:15:01");
+            When_Calculate();
+            Then_Should_Pay(50L);
+        }
 
         private void Given_Parking_Starts_At(string startText)
         {
