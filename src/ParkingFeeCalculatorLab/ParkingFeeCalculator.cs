@@ -51,7 +51,11 @@ namespace ParkingFeeCalculatorLab
             foreach (var dailySession in dailySessions)
             {
                 long todayFee = GetRegularFee(dailySession.GetTodayDuration(), dailySession.GetToday());
-                totalFee += Math.Min(todayFee, 150L);
+                var weekend = new List<DayOfWeek> { DayOfWeek.Saturday, DayOfWeek.Sunday };
+                long dailyLimit = weekend.Contains(dailySession.GetToday().DayOfWeek)
+                    ? 2400L
+                    : 150L; // TODO: 根據假日或國定假日，調整上限
+                totalFee += Math.Min(todayFee, dailyLimit);
             }
             
             return totalFee;
