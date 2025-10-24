@@ -59,9 +59,4 @@ public class ParkingFeeCalculator
     {
         return duration.TotalMinutes <= FIFTEEN_MINUTES.TotalMinutes;
     }
-        
-    // private bool IsHoliday(DateTime today)
-    // {
-    //     return holidayBook.IsHoliday(today);
-    // }
 }
