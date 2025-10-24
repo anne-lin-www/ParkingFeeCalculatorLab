@@ -14,26 +14,26 @@ public class PriceBook
             // Add other national holidays here
         };
     }
-    
-    public bool IsHoliday(DateTime today)
-    {
-        return _weekend.Contains(today.DayOfWeek) || _nationalHolidays.Contains(today.Date);
-    }
 
     public long GetDailyFee(DailySession dailySession)
     {
         long todayFee = GetRegularFee(dailySession);
-        long dailyLimit = IsHoliday(dailySession.GetToday())
+        long dailyLimit = IsHoliday(dailySession.Today)
             ? 2400L
             : 150L;
         return Math.Min(todayFee, dailyLimit);
     }
 
+    private bool IsHoliday(DateTime today)
+    {
+        return _weekend.Contains(today.DayOfWeek) || _nationalHolidays.Contains(today.Date);
+    }
+    
     private long GetRegularFee(DailySession dailySession)
     {
         // 以 30 分鐘為單位，無條件進位
-        long periods = (long)Math.Ceiling(dailySession.GetTodayDuration().TotalMinutes / THIRTY_MINUTES.TotalMinutes);
-        return periods * (IsHoliday(dailySession.GetToday())
+        long periods = (long)Math.Ceiling(dailySession.TodayDuration.TotalMinutes / THIRTY_MINUTES.TotalMinutes);
+        return periods * (IsHoliday(dailySession.Today)
             ? 50
             : 30);
     }
