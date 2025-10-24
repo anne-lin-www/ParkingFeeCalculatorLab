@@ -2,15 +2,20 @@
 
 public class HolidayBook
 {
-    public bool IsHoliday(DateTime today)
+    private readonly List<DayOfWeek> _weekend = [DayOfWeek.Saturday, DayOfWeek.Sunday];
+    private readonly HashSet<DateTime> _nationalHolidays;
+
+    public HolidayBook()
     {
-        var nationalHolidays = new HashSet<DateTime>
+        _nationalHolidays = new HashSet<DateTime>
         {
-            new DateTime(today.Year, 1, 1),   // New Year's Day
-            new DateTime(today.Year, 12, 25), // Christmas
+            new DateTime(2025, 1, 1),   // New Year's Day
             // Add other national holidays here
         };
-        var weekend = new List<DayOfWeek> { DayOfWeek.Saturday, DayOfWeek.Sunday };
-        return nationalHolidays.Contains(today) || weekend.Contains(today.DayOfWeek);
+    }
+    
+    public bool IsHoliday(DateTime today)
+    {
+        return _weekend.Contains(today.DayOfWeek) || _nationalHolidays.Contains(today.Date);
     }
 }
