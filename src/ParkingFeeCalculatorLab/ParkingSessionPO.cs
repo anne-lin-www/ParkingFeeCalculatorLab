@@ -2,41 +2,26 @@
 
 public class ParkingSessionPO
 {
-    public string Plate { get; private set; }
-    public long Start { get; private set; }
-    public long? End { get; private set; }
-
-    private void SetPlate(string plate)
-    {
-        Plate = plate;
-    }
-
-    private void SetStart(long start)
-    {
-        Start = start;
-    }
-
-    private void SetEnd(long? end)
-    {
-        End = end;
-    }
+    private string Plate { get; set; }
+    private long Start { get; set; }
+    private long? End { get; set; }
 
     public static ParkingSessionPO GetParkingSessionPO(ParkingSession parkingSession)
     {
-        ParkingSessionPO parkingSessionPO = new ParkingSessionPO();
-        parkingSessionPO.SetPlate(parkingSession.Plate);
-        parkingSessionPO.SetStart(parkingSession.Start.ToTimestamp());
-        parkingSessionPO.SetEnd(parkingSession.End?.ToTimestamp());
-        return parkingSessionPO;
+        return new ParkingSessionPO
+        {
+            Plate = parkingSession.Plate,
+            Start = parkingSession.Start.ToTimestamp(),
+            End = parkingSession.End?.ToTimestamp()
+        };
     }
 
     public static ParkingSession ToEntity(ParkingSessionPO parkingSessionPO)
     {
-        var parkingSession = new ParkingSession(
+        return new ParkingSession(
             parkingSessionPO.Plate,
             parkingSessionPO.Start.FromTimestamp(),
             parkingSessionPO.End?.FromTimestamp()
         );
-        return parkingSession;
     }
 }

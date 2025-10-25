@@ -40,11 +40,6 @@ public class ParkingSession
         return End.GetValueOrDefault() - Start;
     }
 
-    public void SetEnd(DateTime end)
-    {
-        End = end;
-    }
-
     public static ParkingSession StartParking(string plate, DateTime startTime)
     {
         return new ParkingSession(plate, startTime, null);
@@ -52,6 +47,6 @@ public class ParkingSession
 
     public static void EndParking(ParkingSession? parkingSession, string endText)
     {
-        parkingSession.SetEnd(DateTime.Parse(endText));
+        parkingSession.End = DateTime.Parse(endText);
     }
 }
