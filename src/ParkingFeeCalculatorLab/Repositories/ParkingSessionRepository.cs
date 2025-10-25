@@ -20,7 +20,7 @@ public class ParkingSessionRepository : IParkingSessionRepository
         {
             return null;
         }
-        var parkingSession = ParkingSessionPO.ToEntity(parkingSessionPO);
+        var parkingSession = ParkingSession.Restore(parkingSessionPO);
         return parkingSession;
     }
 }

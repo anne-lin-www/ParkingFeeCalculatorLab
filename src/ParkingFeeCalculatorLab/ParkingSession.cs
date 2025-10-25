@@ -49,4 +49,13 @@ public class ParkingSession
     {
         parkingSession.End = DateTime.Parse(endText);
     }
+
+    public static ParkingSession Restore(ParkingSessionPO parkingSessionPO)
+    {
+        return new ParkingSession(
+            parkingSessionPO.Plate,
+            parkingSessionPO.Start.FromTimestamp(),
+            parkingSessionPO.End?.FromTimestamp()
+        );
+    }
 }
