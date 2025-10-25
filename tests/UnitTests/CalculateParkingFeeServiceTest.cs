@@ -24,7 +24,7 @@ namespace UnitTests
         {
             Given_Parking_Starts_At("2025-01-02T00:00:00");
             Given_Car_Drives_Out_At("ABC-1234", "2025-01-02T00:15:00");
-            When_Calculate();
+            When_Calculate("ABC-1234");
             Then_Should_Pay(0L);
         }
 
@@ -33,7 +33,7 @@ namespace UnitTests
         {
             Given_Parking_Starts_At("2025-01-02T00:00:00");
             Given_Car_Drives_Out_At("ABC-1234", "2025-01-02T00:15:01");
-            When_Calculate();
+            When_Calculate("ABC-1234");
             Then_Should_Pay(30L);
         }
 
@@ -42,7 +42,7 @@ namespace UnitTests
         {
             Given_Parking_Starts_At("2025-01-02T00:01:00");
             Given_Car_Drives_Out_At("ABC-1234", "2025-01-02T00:31:01");
-            When_Calculate();
+            When_Calculate("ABC-1234");
             Then_Should_Pay(60L);
         }
 
@@ -51,7 +51,7 @@ namespace UnitTests
         {
             Given_Parking_Starts_At("2025-01-02T00:00:00");
             Given_Car_Drives_Out_At("ABC-1234", "2025-01-02T01:00:01");
-            When_Calculate();
+            When_Calculate("ABC-1234");
             Then_Should_Pay(90L);
         }
 
@@ -60,7 +60,7 @@ namespace UnitTests
         {
             Given_Parking_Starts_At("2025-01-02T00:00:00");
             Given_Car_Drives_Out_At("ABC-1234", "2025-01-02T02:30:01");
-            When_Calculate();
+            When_Calculate("ABC-1234");
             Then_Should_Pay(150L);
         }
 
@@ -69,7 +69,7 @@ namespace UnitTests
         {
             Given_Parking_Starts_At("2025-01-02T00:00:00");
             Given_Car_Drives_Out_At("ABC-1234", "2025-01-04T00:00:00");
-            When_Calculate();
+            When_Calculate("ABC-1234");
             Then_Should_Pay(150L + 150L);
         }
 
@@ -78,7 +78,7 @@ namespace UnitTests
         {
             Given_Parking_Starts_At("2025-01-02T23:50:00");
             Given_Car_Drives_Out_At("ABC-1234", "2025-01-04T00:00:00");
-            When_Calculate();
+            When_Calculate("ABC-1234");
             Then_Should_Pay(30L + 150L);
         }
 
@@ -87,7 +87,7 @@ namespace UnitTests
         {
             Given_Parking_Starts_At("2025-01-02T00:00:00");
             Given_Car_Drives_Out_At("ABC-1234", "2025-01-03T00:10:00");
-            When_Calculate();
+            When_Calculate("ABC-1234");
             Then_Should_Pay(150L + 30L);
         }
 
@@ -96,7 +96,7 @@ namespace UnitTests
         {
             Given_Parking_Starts_At("2025-01-04T00:00:00");
             Given_Car_Drives_Out_At("ABC-1234", "2025-01-04T00:15:01");
-            When_Calculate();
+            When_Calculate("ABC-1234");
             Then_Should_Pay(50L);
         }
 
@@ -105,7 +105,7 @@ namespace UnitTests
         {
             Given_Parking_Starts_At("2025-01-04T00:00:00");
             Given_Car_Drives_Out_At("ABC-1234", "2025-01-05T00:00:00");
-            When_Calculate();
+            When_Calculate("ABC-1234");
             Then_Should_Pay(2400L);
         }
 
@@ -114,7 +114,7 @@ namespace UnitTests
         {
             Given_Parking_Starts_At("2025-01-05T00:00:00");
             Given_Car_Drives_Out_At("ABC-1234", "2025-01-05T00:15:01");
-            When_Calculate();
+            When_Calculate("ABC-1234");
             Then_Should_Pay(50L);
         }
 
@@ -123,7 +123,7 @@ namespace UnitTests
         {
             Given_Parking_Starts_At("2025-01-01T00:00:00");
             Given_Car_Drives_Out_At("ABC-1234", "2025-01-01T00:15:01");
-            When_Calculate();
+            When_Calculate("ABC-1234");
             Then_Should_Pay(50L);
         }
 
@@ -139,9 +139,9 @@ namespace UnitTests
             _parkingSessionRepository.Save(parkingSession);
         }
 
-        private void When_Calculate()
+        private void When_Calculate(string plate)
         {
-            actual = sut.CalculateFee();
+            actual = sut.CalculateFee(plate);
         }
 
         private void Then_Should_Pay(long expected)

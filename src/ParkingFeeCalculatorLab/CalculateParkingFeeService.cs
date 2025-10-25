@@ -39,9 +39,9 @@ public class CalculateParkingFeeService
         _parkingSessionRepository = parkingSessionRepository;
     }
 
-    public long CalculateFee()
+    public long CalculateFee(string plate)
     {
-        ParkingSession parkingSession = _parkingSessionRepository.Find("ABC-1234");
+        ParkingSession parkingSession = _parkingSessionRepository.Find(plate);
         PriceBook priceBook = _priceBookRepository.GetPriceBook();
         var duration = parkingSession.GetTotalDuration();
 
