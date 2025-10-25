@@ -15,11 +15,12 @@ public class ParkingSessionRepository : IParkingSessionRepository
     public ParkingSession? Find(string plate)
     {
         ParkingSessionPO? parkingSessionPO = _parkingSessions.GetValueOrDefault(plate);
-        
-        return parkingSessionPO is null ? null: new ParkingSession(
-            parkingSessionPO.Plate,
-            parkingSessionPO.Start.FromTimestamp(),
-            parkingSessionPO.End?.FromTimestamp()
-        );
+
+        if (parkingSessionPO is null)
+        {
+            return null;
+        }
+        var parkingSession = ParkingSessionPO.ToEntity(parkingSessionPO);
+        return parkingSession;
     }
 }

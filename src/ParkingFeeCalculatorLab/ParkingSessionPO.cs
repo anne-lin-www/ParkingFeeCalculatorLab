@@ -29,4 +29,14 @@ public class ParkingSessionPO
         parkingSessionPO.SetEnd(parkingSession.End?.ToTimestamp());
         return parkingSessionPO;
     }
+
+    public static ParkingSession ToEntity(ParkingSessionPO parkingSessionPO)
+    {
+        var parkingSession = new ParkingSession(
+            parkingSessionPO.Plate,
+            parkingSessionPO.Start.FromTimestamp(),
+            parkingSessionPO.End?.FromTimestamp()
+        );
+        return parkingSession;
+    }
 }
