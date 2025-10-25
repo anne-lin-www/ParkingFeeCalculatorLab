@@ -22,7 +22,7 @@ namespace UnitTests
         [Test]
         public void CalculateFee_15Minutes_Free()
         {
-            Given_Parking_Starts_At("ABC-1234", "2025-01-02T00:00:00");
+            Given_Car_Drives_In_At("ABC-1234", "2025-01-02T00:00:00");
             Given_Car_Drives_Out_At("ABC-1234", "2025-01-02T00:15:00");
             When_Calculate("ABC-1234");
             Then_Should_Pay(0L);
@@ -31,7 +31,7 @@ namespace UnitTests
         [Test]
         public void CalculateFee_Over_15Minutes_Not_Free()
         {
-            Given_Parking_Starts_At("ABC-1234", "2025-01-02T00:00:00");
+            Given_Car_Drives_In_At("ABC-1234", "2025-01-02T00:00:00");
             Given_Car_Drives_Out_At("ABC-1234", "2025-01-02T00:15:01");
             When_Calculate("ABC-1234");
             Then_Should_Pay(30L);
@@ -40,7 +40,7 @@ namespace UnitTests
         [Test]
         public void CalculateFee_Over_30Minutes_Then_Pay_60()
         {
-            Given_Parking_Starts_At("ABC-1234", "2025-01-02T00:01:00");
+            Given_Car_Drives_In_At("ABC-1234", "2025-01-02T00:01:00");
             Given_Car_Drives_Out_At("ABC-1234", "2025-01-02T00:31:01");
             When_Calculate("ABC-1234");
             Then_Should_Pay(60L);
@@ -49,7 +49,7 @@ namespace UnitTests
         [Test]
         public void Another_Car()
         {
-            Given_Parking_Starts_At("ABC-1234", "2025-01-02T00:01:00");
+            Given_Car_Drives_In_At("ABC-1234", "2025-01-02T00:01:00");
             Given_Car_Drives_Out_At("ABC-1234", "2025-01-02T00:31:01");
             When_Calculate("NOT_MY_CAR");
             Then_Should_Pay(0L);
@@ -58,7 +58,7 @@ namespace UnitTests
         [Test]
         public void CalculateFee_Over_60Minutes_Then_Pay_90()
         {
-            Given_Parking_Starts_At("ABC-1234", "2025-01-02T00:00:00");
+            Given_Car_Drives_In_At("ABC-1234", "2025-01-02T00:00:00");
             Given_Car_Drives_Out_At("ABC-1234", "2025-01-02T01:00:01");
             When_Calculate("ABC-1234");
             Then_Should_Pay(90L);
@@ -67,7 +67,7 @@ namespace UnitTests
         [Test]
         public void CalculateFee_Over_150Minutes_Then_Pay_150()
         {
-            Given_Parking_Starts_At("ABC-1234", "2025-01-02T00:00:00");
+            Given_Car_Drives_In_At("ABC-1234", "2025-01-02T00:00:00");
             Given_Car_Drives_Out_At("ABC-1234", "2025-01-02T02:30:01");
             When_Calculate("ABC-1234");
             Then_Should_Pay(150L);
@@ -76,7 +76,7 @@ namespace UnitTests
         [Test]
         public void CalculateFee_Two_Whole_Days()
         {
-            Given_Parking_Starts_At("ABC-1234", "2025-01-02T00:00:00");
+            Given_Car_Drives_In_At("ABC-1234", "2025-01-02T00:00:00");
             Given_Car_Drives_Out_At("ABC-1234", "2025-01-04T00:00:00");
             When_Calculate("ABC-1234");
             Then_Should_Pay(150L + 150L);
@@ -85,7 +85,7 @@ namespace UnitTests
         [Test]
         public void CalculateFee_Partial_Day_Then_Whole_Day()
         {
-            Given_Parking_Starts_At("ABC-1234", "2025-01-02T23:50:00");
+            Given_Car_Drives_In_At("ABC-1234", "2025-01-02T23:50:00");
             Given_Car_Drives_Out_At("ABC-1234", "2025-01-04T00:00:00");
             When_Calculate("ABC-1234");
             Then_Should_Pay(30L + 150L);
@@ -94,7 +94,7 @@ namespace UnitTests
         [Test]
         public void CalculateFee_Whole_Day_Then_Partial_Day()
         {
-            Given_Parking_Starts_At("ABC-1234", "2025-01-02T00:00:00");
+            Given_Car_Drives_In_At("ABC-1234", "2025-01-02T00:00:00");
             Given_Car_Drives_Out_At("ABC-1234", "2025-01-03T00:10:00");
             When_Calculate("ABC-1234");
             Then_Should_Pay(150L + 30L);
@@ -103,7 +103,7 @@ namespace UnitTests
         [Test]
         public void CalculateFee_Saturday_Pay_50_Per_Half_Hour()
         {
-            Given_Parking_Starts_At("ABC-1234", "2025-01-04T00:00:00");
+            Given_Car_Drives_In_At("ABC-1234", "2025-01-04T00:00:00");
             Given_Car_Drives_Out_At("ABC-1234", "2025-01-04T00:15:01");
             When_Calculate("ABC-1234");
             Then_Should_Pay(50L);
@@ -112,7 +112,7 @@ namespace UnitTests
         [Test]
         public void CalculateFee_Saturday_Daily_Limit_Is_2400()
         {
-            Given_Parking_Starts_At("ABC-1234", "2025-01-04T00:00:00");
+            Given_Car_Drives_In_At("ABC-1234", "2025-01-04T00:00:00");
             Given_Car_Drives_Out_At("ABC-1234", "2025-01-05T00:00:00");
             When_Calculate("ABC-1234");
             Then_Should_Pay(2400L);
@@ -121,7 +121,7 @@ namespace UnitTests
         [Test]
         public void CalculateFee_Sunday_Pay_50_Per_Half_Hour()
         {
-            Given_Parking_Starts_At("ABC-1234", "2025-01-05T00:00:00");
+            Given_Car_Drives_In_At("ABC-1234", "2025-01-05T00:00:00");
             Given_Car_Drives_Out_At("ABC-1234", "2025-01-05T00:15:01");
             When_Calculate("ABC-1234");
             Then_Should_Pay(50L);
@@ -130,20 +130,20 @@ namespace UnitTests
         [Test]
         public void CalculateFee_National_Holiday_Pay_50_Per_Half_Hour()
         {
-            Given_Parking_Starts_At("ABC-1234", "2025-01-01T00:00:00");
+            Given_Car_Drives_In_At("ABC-1234", "2025-01-01T00:00:00");
             Given_Car_Drives_Out_At("ABC-1234", "2025-01-01T00:15:01");
             When_Calculate("ABC-1234");
             Then_Should_Pay(50L);
         }
 
-        private void Given_Parking_Starts_At(string plate, string startText)
+        private void Given_Car_Drives_In_At(string plate, string startText)
         {
             _parkingSessionRepository.Save(new ParkingSession(plate, DateTime.Parse(startText), null));
         }
 
         private void Given_Car_Drives_Out_At(string plate, string endText)
         {
-            ParkingSession parkingSession = _parkingSessionRepository.Find(plate);
+            ParkingSession? parkingSession = _parkingSessionRepository.Find(plate);
             parkingSession.SetEnd(DateTime.Parse(endText));
         }
 
