@@ -45,7 +45,16 @@ namespace UnitTests
             When_Calculate("ABC-1234");
             Then_Should_Pay(60L);
         }
-
+        
+        [Test]
+        public void Another_Car()
+        {
+            Given_Parking_Starts_At("ABC-1234", "2025-01-02T00:01:00");
+            Given_Car_Drives_Out_At("ABC-1234", "2025-01-02T00:31:01");
+            When_Calculate("NOT_MY_CAR");
+            Then_Should_Pay(0L);
+        }
+        
         [Test]
         public void CalculateFee_Over_60Minutes_Then_Pay_90()
         {
@@ -136,7 +145,6 @@ namespace UnitTests
         {
             ParkingSession parkingSession = _parkingSessionRepository.Find(plate);
             parkingSession.SetEnd(DateTime.Parse(endText));
-            _parkingSessionRepository.Save(parkingSession);
         }
 
         private void When_Calculate(string plate)

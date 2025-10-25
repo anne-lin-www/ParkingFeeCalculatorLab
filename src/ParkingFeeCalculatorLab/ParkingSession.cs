@@ -2,7 +2,7 @@
 
 public class ParkingSession
 {
-    private string Plate { get; }
+    public string Plate { get; }
     private DateTime Start { get; }
     private DateTime? End { get; set; }
 

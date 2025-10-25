@@ -2,15 +2,15 @@
 
 public class ParkingSessionRepository : IParkingSessionRepository
 {
-    private ParkingSession _parkingSession;
+    private readonly Dictionary<string, ParkingSession> _parkingSessions = new();
     
     public void Save(ParkingSession parkingSession)
     {
-        _parkingSession = parkingSession;
+        _parkingSessions.Add(parkingSession.Plate, parkingSession);
     }
 
-    public ParkingSession Find(string plate)
+    public ParkingSession? Find(string plate)
     {
-        return _parkingSession;
+        return _parkingSessions.GetValueOrDefault(plate);
     }
 }
