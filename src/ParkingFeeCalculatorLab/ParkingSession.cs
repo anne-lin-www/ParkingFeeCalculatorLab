@@ -45,8 +45,8 @@ public class ParkingSession
         End = end;
     }
 
-    public static ParkingSession StartParking(string plate, string startText)
+    public static ParkingSession StartParking(string plate, DateTime startTime)
     {
-        return new ParkingSession(plate, DateTime.Parse(startText), null);
+        return new ParkingSession(plate, startTime, null);
     }
 }

@@ -145,7 +145,7 @@ namespace UnitTests
 
         private void Given_Car_Drives_In_At(string plate, string startText)
         {
-            ParkingSession parkingSession = ParkingSession.StartParking(plate, startText);
+            ParkingSession parkingSession = ParkingSession.StartParking(plate, DateTime.Parse(startText));
             _parkingSessionRepository.Save(parkingSession);
         }
 
