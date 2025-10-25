@@ -2,7 +2,6 @@
 
 public class ParkingSessionRepository : IParkingSessionRepository
 {
-    private readonly Dictionary<string, ParkingSession> _parkingSessionsOld = new();
     private readonly Dictionary<string, ParkingSessionPO> _parkingSessions = new(); // PersistenceObject
     
     public void Save(ParkingSession parkingSession)
@@ -23,7 +22,5 @@ public class ParkingSessionRepository : IParkingSessionRepository
             parkingSessionPO.Start.FromTimestamp(),
             parkingSessionPO.End?.FromTimestamp()
         );
-        
-        // return _parkingSessions.GetValueOrDefault(plate);
     }
 }
