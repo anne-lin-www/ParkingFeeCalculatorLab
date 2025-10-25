@@ -152,7 +152,10 @@ namespace UnitTests
         private void Given_Car_Drives_Out_At(string plate, string endText)
         {
             ParkingSession? parkingSession = _parkingSessionRepository.Find(plate);
-            parkingSession.SetEnd(DateTime.Parse(endText));
+            ParkingSession.EndParking(parkingSession, endText);
+            // make entity do something O
+            // vs.
+            // set some field of entity X
         }
 
         private void When_Calculate(string plate)

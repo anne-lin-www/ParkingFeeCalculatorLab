@@ -49,4 +49,9 @@ public class ParkingSession
     {
         return new ParkingSession(plate, startTime, null);
     }
+
+    public static void EndParking(ParkingSession? parkingSession, string endText)
+    {
+        parkingSession.SetEnd(DateTime.Parse(endText));
+    }
 }
