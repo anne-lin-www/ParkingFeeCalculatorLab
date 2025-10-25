@@ -1,5 +1,7 @@
 ﻿using ParkingFeeCalculatorLab;
 using NUnit.Framework;
+using ParkingFeeCalculatorLab.Interfaces;
+using ParkingFeeCalculatorLab.Repositories;
 using Shouldly;
 
 namespace UnitTests

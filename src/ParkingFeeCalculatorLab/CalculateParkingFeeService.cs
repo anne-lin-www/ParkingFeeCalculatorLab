@@ -1,3 +1,5 @@
+using ParkingFeeCalculatorLab.Interfaces;
+
 namespace ParkingFeeCalculatorLab;
 
 public class CalculateParkingFeeService

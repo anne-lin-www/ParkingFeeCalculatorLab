@@ -1,4 +1,6 @@
-﻿namespace ParkingFeeCalculatorLab;
+﻿using ParkingFeeCalculatorLab.Interfaces;
+
+namespace ParkingFeeCalculatorLab.Repositories;
 
 public class PriceBookRepository : IPriceBookRepository
 {

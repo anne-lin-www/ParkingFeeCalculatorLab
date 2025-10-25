@@ -1,4 +1,4 @@
-﻿namespace ParkingFeeCalculatorLab;
+﻿namespace ParkingFeeCalculatorLab.Interfaces;
 
 public interface IParkingSessionRepository
 {
