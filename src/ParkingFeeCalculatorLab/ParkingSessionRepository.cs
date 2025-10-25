@@ -6,7 +6,7 @@ public class ParkingSessionRepository : IParkingSessionRepository
     
     public void Save(ParkingSession parkingSession)
     {
-        _parkingSessions.Add(parkingSession.Plate, parkingSession);
+        _parkingSessions.TryAdd(parkingSession.Plate, parkingSession);
     }
 
     public ParkingSession? Find(string plate)

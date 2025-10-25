@@ -156,6 +156,7 @@ namespace UnitTests
             // make entity do something O
             // vs.
             // set some field of entity X
+            _parkingSessionRepository.Save(parkingSession);
         }
 
         private void When_Calculate(string plate)
