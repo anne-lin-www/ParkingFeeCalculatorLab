@@ -3,8 +3,8 @@
 public class ParkingSession
 {
     public string Plate { get; }
-    private DateTime Start { get; }
-    private DateTime? End { get; set; }
+    public DateTime Start { get; }
+    public DateTime? End { get; private set; }
 
     public ParkingSession(string plate, DateTime start, DateTime? end)
     {
