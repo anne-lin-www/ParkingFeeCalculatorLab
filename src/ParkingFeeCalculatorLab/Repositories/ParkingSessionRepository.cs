@@ -8,10 +8,7 @@ public class ParkingSessionRepository : IParkingSessionRepository
     
     public void Save(ParkingSession parkingSession)
     {
-        ParkingSessionPO parkingSessionPO = new ParkingSessionPO();
-        parkingSessionPO.SetPlate(parkingSession.Plate);
-        parkingSessionPO.SetStart(parkingSession.Start.ToTimestamp());
-        parkingSessionPO.SetEnd(parkingSession.End?.ToTimestamp());
+        var parkingSessionPO = ParkingSessionPO.GetParkingSessionPO(parkingSession);
         _parkingSessions[parkingSession.Plate] = parkingSessionPO; // 直接覆蓋，確保 End 能更新
     }
 

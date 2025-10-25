@@ -6,18 +6,27 @@ public class ParkingSessionPO
     public long Start { get; private set; }
     public long? End { get; private set; }
 
-    public void SetPlate(string plate)
+    private void SetPlate(string plate)
     {
         Plate = plate;
     }
 
-    public void SetStart(long start)
+    private void SetStart(long start)
     {
         Start = start;
     }
 
-    public void SetEnd(long? end)
+    private void SetEnd(long? end)
     {
         End = end;
+    }
+
+    public static ParkingSessionPO GetParkingSessionPO(ParkingSession parkingSession)
+    {
+        ParkingSessionPO parkingSessionPO = new ParkingSessionPO();
+        parkingSessionPO.SetPlate(parkingSession.Plate);
+        parkingSessionPO.SetStart(parkingSession.Start.ToTimestamp());
+        parkingSessionPO.SetEnd(parkingSession.End?.ToTimestamp());
+        return parkingSessionPO;
     }
 }
