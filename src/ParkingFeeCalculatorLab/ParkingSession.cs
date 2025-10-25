@@ -2,11 +2,13 @@
 
 public class ParkingSession
 {
+    private string Plate { get; }
     private DateTime Start { get; }
     private DateTime? End { get; set; }
 
-    public ParkingSession(DateTime start, DateTime? end)
+    public ParkingSession(string plate, DateTime start, DateTime? end)
     {
+        Plate = plate;
         Start = start;
         End = end;
     }
@@ -14,7 +16,7 @@ public class ParkingSession
     public List<DailySession> GetDailySessions()
     {
         List<TimeSpan> durations = new List<TimeSpan>();
-        List<DailySession> dailySessions = new List<DailySession>();
+        List<DailySession> dailySessions = new List<DailySession>(); 
         DateTime today = Start;
         DateTime todayStart = today.Date;
         while (todayStart < End)
