@@ -6,6 +6,13 @@ namespace UnitTests
 {
     public class CalculateParkingFeeServiceTest
     {
+        // DDD 物件的生命週期
+        // 1. Factory
+        // 2. Repository
+        //  透過 Repository 來取得或儲存物件
+        // 3. Entity
+        //  一個實體或物件(具有狀態)會存在於系統裡面，通常會放在持久化的裝置中 e.g. 資料庫
+        
         private long actual;
         private CalculateParkingFeeService sut;
         private IPriceBookRepository _priceBookRepository;
@@ -138,7 +145,8 @@ namespace UnitTests
 
         private void Given_Car_Drives_In_At(string plate, string startText)
         {
-            _parkingSessionRepository.Save(new ParkingSession(plate, DateTime.Parse(startText), null));
+            ParkingSession parkingSession = ParkingSession.StartParking(plate, startText);
+            _parkingSessionRepository.Save(parkingSession);
         }
 
         private void Given_Car_Drives_Out_At(string plate, string endText)
