@@ -3,5 +3,5 @@
 public interface IParkingSessionRepository
 {
     void Save(ParkingSession parkingSession);
-    ParkingSession Find();
+    ParkingSession Find(string plate);
 }

@@ -134,7 +134,7 @@ namespace UnitTests
 
         private void Given_Parking_Ends_At(string endText)
         {
-            ParkingSession parkingSession = _parkingSessionRepository.Find();
+            ParkingSession parkingSession = _parkingSessionRepository.Find("ABC-1234");
             parkingSession.SetEnd(DateTime.Parse(endText));
             _parkingSessionRepository.Save(parkingSession);
         }

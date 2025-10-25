@@ -26,6 +26,11 @@ public class CalculateParkingFeeService
     // Repository 的職責、物件的生命週期
     //   ex: calculate(ParkingSession parkingSession)
     //   solution: Repository + Factory
+    //   Tips:
+    //   先 hard code 刻出形狀，再讓 IDE 幫你填上值 (Green)
+    //   用新測項來抽進真實邏輯 (Red)
+    //   改寫成真實邏輯 (Green)
+    //   如有需要，重構 (Refactor)
     // 以將行為委託給 Entity，以取代「資料操作」
     
     public CalculateParkingFeeService(IPriceBookRepository bookRepository, IParkingSessionRepository parkingSessionRepository)
@@ -36,7 +41,7 @@ public class CalculateParkingFeeService
 
     public long CalculateFee()
     {
-        ParkingSession parkingSession = _parkingSessionRepository.Find();
+        ParkingSession parkingSession = _parkingSessionRepository.Find("ABC-1234");
         PriceBook priceBook = _priceBookRepository.GetPriceBook();
         var duration = parkingSession.GetTotalDuration();
 

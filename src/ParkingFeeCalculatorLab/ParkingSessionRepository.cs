@@ -9,7 +9,7 @@ public class ParkingSessionRepository : IParkingSessionRepository
         _parkingSession = parkingSession;
     }
 
-    public ParkingSession Find()
+    public ParkingSession Find(string plate)
     {
         return _parkingSession;
     }
